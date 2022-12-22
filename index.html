@@ -260,5 +260,28 @@ sudo usermod -aG docker &lt;username&gt;
       </li>
     </ul>
     <h3 id="dns"><strong>DNS</strong></h3>
+    <ul>
+      <li>
+        Static IPs and Using IPs to talk to containers is an antipattern, Avoid
+        it
+      </li>
+      <li>
+        Docker daemon has a built-in DNS server that containers use by default
+      </li>
+      <li>Docker defaults the hostnames to the container's name</li>
+      <li>
+        The default bridge network does not have the built-in DNS server by
+        default, We can use
+        <code>docker container run --link &lt;list&gt;</code> to link the
+        containers to each other in the default bridge network
+        <img
+          src="images/Screenshot%20from%202022-12-22%2020-06-21.png"
+          alt=""
+        />
+      </li>
+    </ul>
+    <p>
+      <img src="images/Screenshot%20from%202022-12-22%2020-13-44.png" alt="" />
+    </p>
   </body>
 </html>

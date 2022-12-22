@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Docker</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 20px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="docker">Docker</h1>
+<h2 id="installation">Installation</h2>
+<pre><code class="language-bash">curl -fsSL https://get.docker.com -o get-docker.sh | sh
+sudo usermod -aG docker &lt;username&gt;
+</code></pre>
+<hr>
+<h2 id="checking-the-installation">Checking the installation</h2>
+<p><code>docker version</code> -&gt; check for status of the server and client</p>
+<p><code>docker info</code> -&gt; config values</p>
+<p><code>docker</code> -&gt; Gives list of all commands available</p>
+<ul>
+<li>Docker cli structure
+<ul>
+<li><code>docker &lt;command&gt;</code> -&gt; old way</li>
+<li><code>docker &lt;command&gt; &lt;sub-command&gt;</code> -&gt; format of the management command</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="basics---creating-and-using-containers">Basics - Creating and using containers</h2>
+<h3 id="container-vs-vm"><strong>Container vs VM</strong></h3>
+<p><img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2000-20-34.png" alt=""></p>
+<h3 id="image-vs-containers"><strong>Image vs Containers</strong></h3>
+<p>Image -&gt; Binaries, Libraries, Source code the make up the application</p>
+<p>Container -&gt; Running instance of that image, Can have many container running off of same image</p>
+<h3 id="basics-of-docker-containers"><strong>Basics of docker containers</strong></h3>
+<p><code>docker container run --publish 80:80 nginx</code></p>
+<p><code>docker container run --publish 80:80 --detach nginx</code> : Runs the container in the background</p>
+<p><code>docker container run --publish 80:80 --detach --name myserver nginx</code>: Specify custom name</p>
+<p><code>docker container ls</code>: Lists all the <strong>running</strong> containers</p>
+<p><code>docker container ls -a</code>: Lists all the containers</p>
+<p><img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-21%2023-55-27.png" alt=""></p>
+<h3 id="run-vs-start"><strong>Run vs Start</strong></h3>
+<p><code>docker container run</code>: Starts a new container</p>
+<p><code>docker container start</code>: Starts an existing stopped container</p>
+<h3 id="checking-logs"><strong>Checking logs</strong></h3>
+<p><code>docker container logs &lt;name&gt;</code></p>
+<h3 id="docker-container-commands-list"><strong>Docker container commands list</strong></h3>
+<p><img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2000-02-44.png" alt=""></p>
+<h3 id="working-of-docker-container-run-command"><strong>Working of <code>docker container run</code> command</strong></h3>
+<p><img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2000-11-26.png" alt=""></p>
+<p><img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2000-12-16.png" alt=""></p>
+<h3 id="other-docker-commands"><strong>Other docker commands</strong></h3>
+<p><code>docker search &lt;name&gt;</code>: Search on docker hub for image
+<code>docker images</code>: List all local images</p>
+<h3 id="inside-the-containers"><strong>Inside the containers</strong></h3>
+<p><code>docker container top &lt;name&gt;</code>: Information about the processes running inside the container</p>
+<p><code>docker container inspect &lt;name&gt;</code>: Metadata about the container (JSON format)</p>
+<p><code>docker container stats &lt;name&gt;</code>: Performance stats about all containers</p>
+<h3 id="getting-a-shell-inside-a-container"><strong>Getting a shell inside a container</strong></h3>
+<p><code>docker container run -it</code></p>
+<ul>
+<li>i: interactive</li>
+<li>t: allocate a pseudo tty
+<img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2014-20-09.png" alt="">
+<img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2014-20-46.png" alt=""></li>
+</ul>
+<p><code>docker container start -ai &lt;name&gt;</code></p>
+<ul>
+<li>
+<p>a: Attach STDOUT/STDERR and forward signals</p>
+</li>
+<li>
+<p>i: Attach container's STDIN
+<img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2014-26-02.png" alt=""></p>
+</li>
+<li>
+<p><code>docker container exec -it &lt;name&gt;</code>: Run commands inside an already running container
+<img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2014-38-24.png" alt=""></p>
+</li>
+<li>
+<p>We can only run the command which already exist inside the image
+<img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2014-43-42.png" alt=""></p>
+</li>
+</ul>
+<h3 id="networking-in-docker"><strong>Networking in docker</strong></h3>
+<p><code>docker container run -p host:container</code>: Publish a container's port(s) to the host</p>
+<p><code>docker container port &lt;name&gt;</code>: Get port details for the container</p>
+<p><img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2018-33-58.png" alt=""></p>
+<p><img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2018-34-23.png" alt=""></p>
+<ul>
+<li>How docker moves packets in and out
+<img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2018-53-53.png" alt=""></li>
+</ul>
+<h3 id="cli-network-management"><strong>CLI network management</strong></h3>
+<ul>
+<li><code>docker network ls</code>: Lists all networks
+<ul>
+<li>bridge: Virual network</li>
+<li>host: No virtual network, Directly connected to host</li>
+<li>null : No network only localhost
+<img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2019-02-24.png" alt=""></li>
+</ul>
+</li>
+<li><code>docker network inspect &lt;name&gt;</code>: Info about the network</li>
+<li>Attaching a container to a network at start
+<img src="file:////home/pmohit/GITDIR/MyNotes/DOCKER/images/Screenshot%20from%202022-12-22%2019-08-17.png" alt=""></li>
+<li><code>docker network connect &lt;network&gt; &lt;container&gt;</code>: Attach a container to a network, Dynamically creates a NIC in the container connected to a virtual network</li>
+<li><code>docker network disconnect &lt;network&gt; &lt;container&gt;</code></li>
+</ul>
+<h3 id="dns"><strong>DNS</strong></h3>
+
+        
+        
+    </body>
+    </html>
